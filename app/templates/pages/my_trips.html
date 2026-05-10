@@ -1,0 +1,220 @@
+{% extends "base.html" %}
+
+{% block title %}My Trips - Traveloop{% endblock %}
+
+{% block content %}
+<div class="flex">
+    <!-- Sidebar -->
+    {% include 'components/sidebar.html' %}
+
+    <!-- Main Content -->
+    <main class="flex-1 md:ml-64 min-h-screen">
+        <!-- Page Header -->
+        <div class="sticky top-16 z-10 bg-white dark:bg-slate-950 border-b border-gray-200 dark:border-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    <div>
+                        <h1 class="text-3xl font-display font-bold text-gray-900 dark:text-white">My Trips 🗺️</h1>
+                        <p class="text-gray-600 dark:text-slate-400 mt-1">Manage and view all your travel plans</p>
+                    </div>
+                    <button id="create-trip-btn" class="btn btn-primary self-start md:self-auto">
+                        <i class="fas fa-plus mr-2"></i>New Trip
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div id="all-trips-container" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <!-- All trips will be loaded here -->
+                <div class="col-span-full text-center py-12">
+                    <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-sky-500 border-t-transparent mb-4"></div>
+                    <p class="text-gray-600 dark:text-slate-400">Loading your trips...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Create Trip Modal -->
+<div id="create-trip-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+        <div class="p-6 border-b border-gray-200 dark:border-slate-800 flex items-center justify-between sticky top-0 bg-white dark:bg-slate-900">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Create New Trip</h2>
+            <button id="close-modal" class="text-gray-500 hover:text-gray-700 dark:hover:text-slate-300">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+
+        <form id="create-trip-form" class="p-6 space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">Trip Title</label>
+                <input type="text" id="trip-title" required class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500" placeholder="e.g., Summer vacation to Paris">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">Destination</label>
+                <input type="text" id="trip-destination" required class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500" placeholder="e.g., Paris, France">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">Start Date</label>
+                    <input type="date" id="trip-start-date" required class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">End Date</label>
+                    <input type="date" id="trip-end-date" required class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+                </div>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">Budget (Optional)</label>
+                <input type="number" id="trip-budget" step="0.01" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500" placeholder="0.00">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">Description (Optional)</label>
+                <textarea id="trip-description" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500" rows="3" placeholder="Add notes about your trip..."></textarea>
+            </div>
+            <div class="flex gap-3 pt-4">
+                <button type="button" id="cancel-modal" class="flex-1 px-4 py-2 rounded-lg border border-gray-300 dark:border-slate-600 text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors font-medium">Cancel</button>
+                <button type="submit" class="flex-1 btn btn-primary">Create Trip</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .card {
+        background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%);
+    }
+
+    .dark .card {
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    }
+
+    .reveal {
+        animation: revealCard 0.6s ease-out forwards;
+        opacity: 0;
+    }
+
+    @keyframes revealCard {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/api-client.js') }}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        try {
+            await loadTripsData();
+            setupEventListeners();
+        } catch (error) {
+            console.error('Error loading trips:', error);
+        }
+    });
+
+    async function loadTripsData() {
+        const allTrips = await apiClient.getTrips();
+        renderAllTrips(allTrips.trips);
+    }
+
+    function renderAllTrips(trips) {
+        const container = document.getElementById('all-trips-container');
+
+        if (trips.length === 0) {
+            container.innerHTML = '<div class="col-span-full text-center py-12"><p class="text-gray-600 dark:text-slate-400">No trips yet. <a href="#" id="create-first-trip-link" class="text-sky-600 dark:text-sky-400 hover:underline font-semibold">Create your first trip!</a></p></div>';
+            document.getElementById('create-first-trip-link')?.addEventListener('click', (e) => {
+                e.preventDefault();
+                openModal();
+            });
+            return;
+        }
+
+        container.innerHTML = trips.map(trip => createTripCard(trip)).join('');
+    }
+
+    function createTripCard(trip) {
+        const startDate = DateHelper.formatShort(trip.start_date);
+        const endDate = DateHelper.formatShort(trip.end_date);
+
+        return `
+            <a href="/trips/${trip.id}" class="card reveal block group cursor-pointer hover:shadow-lg transition-all duration-300">
+                <div class="relative h-48 bg-gradient-to-br from-sky-400 to-orange-400 rounded-t-xl overflow-hidden">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-300"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <i class="fas fa-map-pin text-white text-4xl opacity-80"></i>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">${trip.title}</h3>
+                    <p class="text-sm text-gray-600 dark:text-slate-400 mb-3">
+                        <i class="fas fa-location-dot mr-1"></i>${trip.destination}
+                    </p>
+                    <div class="flex items-center justify-between text-sm text-gray-600 dark:text-slate-400 mb-4">
+                        <span><i class="far fa-calendar mr-1"></i>${startDate} - ${endDate}</span>
+                    </div>
+                    <div class="flex items-center justify-between pt-3 border-t border-gray-200 dark:border-slate-800">
+                        <span class="font-semibold text-gray-900 dark:text-white">Budget: ${CurrencyHelper.format(trip.budget)}</span>
+                        <span class="px-3 py-1 rounded-full text-xs font-medium ${trip.status === 'planning' ? 'bg-sky-100 dark:bg-sky-900/30 text-sky-700 dark:text-sky-300' : 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300'}">${trip.status}</span>
+                    </div>
+                </div>
+            </a>
+        `;
+    }
+
+    function setupEventListeners() {
+        document.getElementById('create-trip-btn').addEventListener('click', openModal);
+        document.getElementById('close-modal').addEventListener('click', closeModal);
+        document.getElementById('cancel-modal').addEventListener('click', closeModal);
+        document.getElementById('create-trip-form').addEventListener('submit', handleCreateTrip);
+        
+        document.getElementById('create-trip-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'create-trip-modal') {
+                closeModal();
+            }
+        });
+    }
+
+    function openModal() {
+        document.getElementById('create-trip-modal').classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        document.getElementById('create-trip-modal').classList.add('hidden');
+        document.body.style.overflow = 'auto';
+        document.getElementById('create-trip-form').reset();
+    }
+
+    async function handleCreateTrip(e) {
+        e.preventDefault();
+
+        const tripData = {
+            title: document.getElementById('trip-title').value,
+            destination: document.getElementById('trip-destination').value,
+            start_date: document.getElementById('trip-start-date').value,
+            end_date: document.getElementById('trip-end-date').value,
+            budget: parseFloat(document.getElementById('trip-budget').value) || 0,
+            description: document.getElementById('trip-description').value
+        };
+
+        try {
+            await apiClient.createTrip(tripData);
+            closeModal();
+            await loadTripsData();
+        } catch (error) {
+            alert('Error creating trip: ' + error.message);
+        }
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block title %}Settings - Traveloop{% endblock %}
+
+{% block content %}
+<div class="flex">
+    <!-- Sidebar -->
+    {% include 'components/sidebar.html' %}
+
+    <!-- Main Content -->
+    <main class="flex-1 md:ml-64 min-h-screen">
+        <div class="pt-8 pb-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+            <h1 class="text-3xl font-display font-bold text-gray-900 dark:text-white mb-8">Settings</h1>
+            
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
+                <div class="p-6 md:p-8">
+                    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-6">Profile Information</h2>
+                    
+                    <form id="profile-settings-form" class="space-y-6" enctype="multipart/form-data">
+                        <!-- Profile Picture -->
+                        <div class="flex items-center gap-6">
+                            <div class="w-24 h-24 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-700 flex-shrink-0 border-4 border-white dark:border-gray-800 shadow-md">
+                                {% if current_user.profile_picture %}
+                                    <img id="preview-avatar" src="{{ current_user.profile_picture }}" alt="Profile" class="w-full h-full object-cover">
+                                {% else %}
+                                    <div id="preview-avatar-placeholder" class="w-full h-full flex items-center justify-center bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 font-bold text-3xl">
+                                        {{ current_user.username[0]|upper }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="flex-1 space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Upload Profile Picture</label>
+                                    <input type="file" id="profile_image" name="profile_image" accept="image/*"
+                                        class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100 dark:file:bg-violet-900/30 dark:file:text-violet-400">
+                                </div>
+                                <div class="relative flex items-center py-2">
+                                    <div class="flex-grow border-t border-gray-200 dark:border-gray-700"></div>
+                                    <span class="flex-shrink-0 mx-4 text-gray-400 text-xs uppercase font-medium">Or Use URL</span>
+                                    <div class="flex-grow border-t border-gray-200 dark:border-gray-700"></div>
+                                </div>
+                                <div>
+                                    <input type="url" id="profile_picture" name="profile_picture" value="{{ current_user.profile_picture if current_user.profile_picture and current_user.profile_picture.startswith('http') else '' }}" 
+                                        class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-violet-500 focus:border-violet-500 dark:text-white transition-colors"
+                                        placeholder="https://example.com/your-image.jpg">
+                                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Provide a public image URL instead.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Username -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Username</label>
+                            <input type="text" id="username" name="username" value="{{ current_user.username }}" required
+                                class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-violet-500 focus:border-violet-500 dark:text-white transition-colors">
+                        </div>
+
+                        <!-- Submit -->
+                        <div class="pt-4 border-t border-gray-100 dark:border-gray-700 flex justify-end">
+                            <button type="submit" class="px-6 py-2.5 bg-violet-600 hover:bg-violet-700 text-white font-semibold rounded-xl shadow-sm transition-colors focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900" data-loading-button>
+                                <span>Save Changes</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+document.getElementById('profile-settings-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData();
+    formData.append('username', document.getElementById('username').value);
+    
+    const fileInput = document.getElementById('profile_image');
+    if (fileInput.files.length > 0) {
+        formData.append('profile_image', fileInput.files[0]);
+    } else {
+        formData.append('profile_picture', document.getElementById('profile_picture').value);
+    }
+    
+    try {
+        const response = await fetch('/settings/api/profile', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
+            },
+            body: formData
+        });
+        
+        const data = await response.json();
+        if (response.ok) {
+            Notify.success('Profile updated successfully!');
+            setTimeout(() => window.location.reload(), 1000);
+        } else {
+            Notify.error(data.error || 'Failed to update profile');
+        }
+    } catch (err) {
+        Notify.error('Network error occurred.');
+    }
+});
+
+// Basic live preview of image
+document.getElementById('profile_picture').addEventListener('input', function() {
+    const url = this.value.trim();
+    if (url) {
+        let img = document.getElementById('preview-avatar');
+        if (!img) {
+            const container = document.getElementById('preview-avatar-placeholder')?.parentElement;
+            if (container) {
+                container.innerHTML = `<img id="preview-avatar" src="${url}" alt="Profile" class="w-full h-full object-cover">`;
+            }
+        } else {
+            img.src = url;
+        }
+    }
+});
+</script>
+{% endblock %}

@@ -12,6 +12,8 @@ from app.routes.community_api import community_api_bp
 from app.routes.trip_api import trip_api_bp
 from app.routes.admin_api import admin_api_bp
 
+from app.routes.settings import settings_bp
+
 # Create blueprints for different route groups
 main_bp = Blueprint('main', __name__)
 trips_bp = Blueprint('trips', __name__, url_prefix='/trips')
@@ -20,6 +22,23 @@ trips_bp = Blueprint('trips', __name__, url_prefix='/trips')
 def index():
     """Public home page."""
     return render_template('pages/home.html')
+
+@main_bp.route('/profile')
+@login_required
+def profile_self():
+    from app.models.trip import Trip
+    public_trips = current_user.trips.filter_by(is_public=True).order_by(Trip.created_at.desc()).all()
+    return render_template('pages/profile.html', user=current_user, public_trips=public_trips)
+
+@main_bp.route('/profile/<username>')
+def profile_view(username):
+    from app.models.user import User
+    from app.models.trip import Trip
+    user = User.query.filter_by(username=username).first()
+    if not user:
+        return render_template('errors/404.html'), 404
+    public_trips = user.trips.filter_by(is_public=True).order_by(Trip.created_at.desc()).all()
+    return render_template('pages/profile.html', user=user, public_trips=public_trips)
 
 @main_bp.route('/dashboard')
 @login_required
@@ -68,6 +87,13 @@ def register_blueprints(app):
     app.register_blueprint(share_api_bp)
     app.register_blueprint(community_api_bp)
     app.register_blueprint(admin_api_bp)
+    app.register_blueprint(settings_bp)
+
+@trips_bp.route('/')
+@login_required
+def my_trips():
+    """Page displaying all user's trips"""
+    return render_template('pages/my_trips.html')
 
 @trips_bp.route('/<int:trip_id>')
 @login_required
