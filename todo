@@ -169,28 +169,28 @@
 
 ---
 
-# PHASE 6 — Advanced Features (IN PROGRESS 🏗️)
+# PHASE 6 — Advanced Features (COMPLETED ✅)
 
 ## Backend: Budget, Packing, Notes
-* [ ] Create budget calculator
-* [ ] Create expense tracker
-* [ ] Create daily budget calculation
-* [ ] Create budget alerts
-* [ ] Create packing checklist items API
-* [ ] Create notes API
+* [x] Create budget calculator (Charts & Stats)
+* [x] Create expense tracker
+* [x] Create daily budget calculation
+* [x] Create budget alerts
+* [x] Create packing checklist items API
+* [x] Create notes API
 
-## Frontend: Budget, Packing, Notes UI (depends on backend above)
-* [ ] Design Packing Checklist UI
-* [ ] Add checklist item toggle
-* [ ] Add progress tracking
-* [ ] Create Notes UI
-* [ ] Setup Chart.js
-* [ ] Create budget charts (pie, bar, line)
-* [ ] Create expense breakdown display
+## Frontend: Budget, Packing, Notes UI (COMPLETED ✅)
+* [x] Design Packing Checklist UI
+* [x] Add checklist item toggle
+* [x] Add progress tracking
+* [x] Create Notes UI
+* [x] Setup Chart.js
+* [x] Create budget charts (pie, bar)
+* [x] Create expense breakdown display
 
 ---
 
-# PHASE 7 — Sharing & Community
+# PHASE 7 — Sharing & Community (IN PROGRESS 🏗️)
 
 ## Backend: Sharing System
 * [ ] Create SharedLink model
