@@ -11,6 +11,8 @@
     .dark .timeline-container::-webkit-scrollbar-thumb { background-color: #334155; }
     .drag-ghost { opacity: 0.5; background-color: #f8fafc; border: 2px dashed #cbd5e1; }
     .dark .drag-ghost { background-color: #1e293b; border-color: #475569; }
+    #map { background-color: #0f172a; } /* Matches dark mode bg */
+    .search-spinner { pointer-events: none; }
 </style>
 {% endblock %}
 
@@ -52,14 +54,49 @@
     <div id="trip-tab-content">
         <!-- Itinerary Tab -->
         <div class="hidden p-4 rounded-xl bg-gray-50 dark:bg-gray-900/50" id="itinerary" role="tabpanel" aria-labelledby="itinerary-tab">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-xl font-bold dark:text-white">Timeline</h2>
-                <button onclick="openStopModal()" class="px-4 py-2 bg-violet-600 hover:bg-violet-700 text-white rounded-lg text-sm font-medium transition-colors">
-                    <i class="fas fa-plus mr-1"></i> Add Stop
-                </button>
-            </div>
-            <div class="timeline-container relative border-l border-gray-200 dark:border-gray-700 ml-3" id="timeline">
-                <!-- Timeline items injected via JS -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Timeline Column -->
+                <div class="lg:col-span-2">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-bold dark:text-white">Timeline</h2>
+                        <button onclick="openStopModal()" class="px-4 py-2 bg-violet-600 hover:bg-violet-700 text-white rounded-lg text-sm font-medium transition-colors">
+                            <i class="fas fa-plus mr-1"></i> Add Stop
+                        </button>
+                    </div>
+                    <div class="timeline-container relative border-l border-gray-200 dark:border-gray-700 ml-3" id="timeline">
+                        <!-- Timeline items injected via JS -->
+                    </div>
+                </div>
+
+                <!-- Map & Discover Column -->
+                <div class="lg:col-span-1 space-y-6">
+                    <!-- Search Box -->
+                    <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+                        <h3 class="font-bold dark:text-white mb-3">Explore Destinations</h3>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                <i class="fas fa-search text-gray-400 text-sm"></i>
+                            </div>
+                            <input type="text" id="city-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="Search cities (e.g. Paris)">
+                            <div id="search-results" class="absolute z-50 w-full bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-lg shadow-xl mt-1 hidden max-h-60 overflow-y-auto">
+                                <!-- Results injected via JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Map -->
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
+                        <div id="map" class="h-64 w-full"></div>
+                    </div>
+
+                    <!-- Attractions -->
+                    <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+                        <h3 class="font-bold dark:text-white mb-3">Nearby Attractions</h3>
+                        <div id="attractions-container" class="space-y-2 max-h-80 overflow-y-auto pr-2">
+                            <p class="text-gray-500 text-sm italic">Search for a city to see attractions.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- Empty State -->
             <div id="itinerary-empty" class="hidden text-center py-12">
@@ -97,6 +134,21 @@
                     <p class="text-2xl font-bold text-emerald-500" id="budget-remaining">₹0</p>
                 </div>
             </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-8">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+                    <h3 class="text-sm font-bold text-gray-500 dark:text-gray-400 mb-4 uppercase tracking-wider">Expense Categories</h3>
+                    <div class="h-64 flex items-center justify-center">
+                        <canvas id="budgetPieChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+                    <h3 class="text-sm font-bold text-gray-500 dark:text-gray-400 mb-4 uppercase tracking-wider">Budget vs Reality</h3>
+                    <div class="h-64 flex items-center justify-center">
+                        <canvas id="budgetBarChart"></canvas>
+                    </div>
+                </div>
+            </div>
 
             <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -119,7 +171,15 @@
         <!-- Packing Tab -->
         <div class="hidden p-4 rounded-xl bg-gray-50 dark:bg-gray-900/50" id="packing" role="tabpanel" aria-labelledby="packing-tab">
             <div class="max-w-2xl mx-auto bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
-                <h2 class="text-xl font-bold dark:text-white mb-6">Packing List</h2>
+                <div class="flex justify-between items-center mb-2">
+                    <h2 class="text-xl font-bold dark:text-white">Packing List</h2>
+                    <span class="text-sm font-medium text-violet-600 dark:text-violet-400" id="packing-percent">0% Packed</span>
+                </div>
+                
+                <!-- Progress Bar -->
+                <div class="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-2 mb-6">
+                    <div id="packing-progress-bar" class="bg-violet-600 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
                 
                 <form id="packing-form" class="flex gap-2 mb-6">
                     <input type="text" id="packing-input" placeholder="Add an item to pack..." class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" required>
@@ -306,4 +366,5 @@
 <!-- SortableJS for drag & drop -->
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 <script src="{{ url_for('static', filename='js/trip.js') }}"></script>
+<script src="{{ url_for('static', filename='js/locations.js') }}"></script>
 {% endblock %}

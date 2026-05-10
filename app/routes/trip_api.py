@@ -28,7 +28,10 @@ def add_stop(trip_id):
     try:
         arrival = datetime.fromisoformat(data['arrival_date']).date()
         departure = datetime.fromisoformat(data['departure_date']).date()
-        stop = TripService.add_stop(trip_id, data['name'], data['location'], arrival, departure)
+        stop = TripService.add_stop(
+            trip_id, data['name'], data['location'], arrival, departure,
+            latitude=data.get('latitude'), longitude=data.get('longitude')
+        )
         return jsonify(stop), 201
     except (ValueError, KeyError) as e:
         return {'error': str(e)}, 400

@@ -61,21 +61,28 @@ async function loadTripDetails() {
 
 async function loadItinerary() {
     try {
-        const [stopsRes, activitiesRes] = await Promise.all([
+        const [stopsRes, activitiesRes, weatherRes, travelRes] = await Promise.all([
             fetch(`/api/trips/${tripId}/stops`),
-            fetch(`/api/trips/${tripId}/activities`)
+            fetch(`/api/trips/${tripId}/activities`),
+            fetch(`/api/itinerary/${tripId}/weather`),
+            fetch(`/api/itinerary/${tripId}/travel-times`)
         ]);
         
         const stops = await stopsRes.json();
         const activities = await activitiesRes.json();
+        const weather = await weatherRes.json();
+        const travelTimes = await travelRes.json();
         
-        renderItinerary(stops, activities);
+        renderItinerary(stops, activities, weather, travelTimes);
+        if (window.locationManager) {
+            window.locationManager.renderStopsOnMap(stops);
+        }
     } catch (e) {
         console.error('Failed to load itinerary', e);
     }
 }
 
-function renderItinerary(stops, activities) {
+function renderItinerary(stops, activities, weather = {}, travelTimes = []) {
     const container = document.getElementById('timeline');
     container.innerHTML = '';
     
@@ -86,11 +93,26 @@ function renderItinerary(stops, activities) {
     
     document.getElementById('itinerary-empty').classList.add('hidden');
 
-    stops.forEach(stop => {
+    stops.forEach((stop, index) => {
         const stopActs = activities.filter(a => a.stop_id === stop.id).sort((a,b) => a.order - b.order);
-        
+        const stopWeather = weather[stop.id] || [];
+        const currentTravel = travelTimes.find(t => t.from_stop_id === stop.id);
+
+        // Weather summary for the stop
+        let weatherHtml = '';
+        if (stopWeather.length > 0) {
+            const forecast = stopWeather[0]; // Just show the first one as summary
+            weatherHtml = `
+                <div class="flex items-center gap-2 bg-white dark:bg-gray-800 px-3 py-1 rounded-full border border-gray-100 dark:border-gray-700 shadow-sm text-xs mt-2">
+                    <img src="https://openweathermap.org/img/wn/${forecast.icon}.png" class="w-6 h-6" alt="weather">
+                    <span class="font-bold dark:text-white">${Math.round(forecast.temp)}°C</span>
+                    <span class="text-gray-400 capitalize">${forecast.description}</span>
+                </div>
+            `;
+        }
+
         const stopEl = document.createElement('div');
-        stopEl.className = 'mb-10 ml-6';
+        stopEl.className = 'mb-10 ml-6 relative';
         stopEl.innerHTML = `
             <span class="absolute flex items-center justify-center w-8 h-8 bg-violet-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-violet-900 text-violet-600 dark:text-violet-400">
                 <i class="fas fa-map-marker-alt text-sm"></i>
@@ -99,6 +121,7 @@ function renderItinerary(stops, activities) {
                 <div>
                     <h3 class="flex items-center text-lg font-bold text-gray-900 dark:text-white">${stop.name} <span class="text-sm font-normal text-gray-500 ml-2">(${stop.location})</span></h3>
                     <time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">${DateHelper.format(stop.arrival_date)} to ${DateHelper.format(stop.departure_date)}</time>
+                    ${weatherHtml}
                 </div>
                 <button onclick="openActivityModal(${stop.id})" class="text-xs bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 rounded px-2 py-1 hover:bg-gray-50 dark:hover:bg-gray-700">
                     <i class="fas fa-plus mr-1"></i> Activity
@@ -123,6 +146,15 @@ function renderItinerary(stops, activities) {
                     </div>
                 `).join('')}
             </div>
+
+            ${currentTravel ? `
+                <div class="absolute -bottom-8 left-0 flex items-center gap-2 text-xs text-gray-400 bg-gray-50 dark:bg-gray-900/50 px-2 py-1 rounded">
+                    <i class="fas fa-car"></i>
+                    <span>Travel to next stop: <b>${currentTravel.info.formatted_duration}</b></span>
+                    <span class="text-gray-300">|</span>
+                    <span>${(currentTravel.info.distance / 1000).toFixed(1)} km</span>
+                </div>
+            ` : ''}
         `;
         
         container.appendChild(stopEl);
@@ -151,7 +183,9 @@ async function handleStopSubmit(e) {
         name: document.getElementById('stop-name').value,
         location: document.getElementById('stop-location').value,
         arrival_date: document.getElementById('stop-arrival').value,
-        departure_date: document.getElementById('stop-departure').value
+        departure_date: document.getElementById('stop-departure').value,
+        latitude: window.locationManager ? window.locationManager.selectedLat : null,
+        longitude: window.locationManager ? window.locationManager.selectedLon : null
     };
     
     try {
@@ -212,8 +246,12 @@ async function reorderActivities(activityIds) {
 // --- Packing Logic ---
 async function loadPacking() {
     try {
-        const res = await fetch(`/api/trips/${tripId}/packing`);
-        const items = await res.json();
+        const [itemsRes, statsRes] = await Promise.all([
+            fetch(`/api/trips/${tripId}/packing`),
+            fetch(`/api/itinerary/${tripId}/stats`)
+        ]);
+        const items = await itemsRes.json();
+        const stats = await statsRes.json();
         
         const list = document.getElementById('packing-list');
         list.innerHTML = items.map(item => `
@@ -225,6 +263,11 @@ async function loadPacking() {
                 <button onclick="deletePacking(${item.id})" class="text-gray-400 hover:text-red-500"><i class="fas fa-times"></i></button>
             </div>
         `).join('');
+
+        // Update progress bar
+        const percent = stats.packing.percent || 0;
+        document.getElementById('packing-percent').textContent = `${percent}% Packed`;
+        document.getElementById('packing-progress-bar').style.width = `${percent}%`;
     } catch (e) { console.error(e); }
 }
 
@@ -263,9 +306,14 @@ async function deletePacking(id) {
 // --- Budget Logic ---
 async function loadBudget() {
     try {
-        const res = await fetch(`/api/trips/${tripId}/budget`);
-        if (!res.ok) return; // silently skip if not authorized
-        const items = await res.json();
+        const [itemsRes, statsRes] = await Promise.all([
+            fetch(`/api/trips/${tripId}/budget`),
+            fetch(`/api/itinerary/${tripId}/stats`)
+        ]);
+        
+        if (!itemsRes.ok || !statsRes.ok) return;
+        const items = await itemsRes.json();
+        const stats = await statsRes.json();
         if (!Array.isArray(items)) return;
         
         const list = document.getElementById('budget-list');
@@ -284,14 +332,77 @@ async function loadBudget() {
         `).join('');
         
         // Update summary
-        const expectedTotal = items.reduce((sum, item) => sum + (item.expected_amount || 0), 0);
-        const actualTotal = items.reduce((sum, item) => sum + (item.actual_amount || 0), 0);
-        const remaining = expectedTotal - actualTotal;
-        
-        document.getElementById('budget-total').textContent = `₹${expectedTotal.toLocaleString('en-IN')}`;
-        document.getElementById('budget-spent').textContent = `₹${actualTotal.toLocaleString('en-IN')}`;
-        document.getElementById('budget-remaining').textContent = `₹${remaining.toLocaleString('en-IN')}`;
+        const s = stats.budget;
+        document.getElementById('budget-total').textContent = `₹${s.expected_total.toLocaleString('en-IN')}`;
+        document.getElementById('budget-spent').textContent = `₹${s.actual_total.toLocaleString('en-IN')}`;
+        document.getElementById('budget-remaining').textContent = `₹${s.remaining.toLocaleString('en-IN')}`;
+
+        renderBudgetCharts(s);
     } catch (e) { console.error('loadBudget error:', e); }
+}
+
+let budgetPieChart = null;
+let budgetBarChart = null;
+
+function renderBudgetCharts(stats) {
+    const ctxPie = document.getElementById('budgetPieChart')?.getContext('2d');
+    const ctxBar = document.getElementById('budgetBarChart')?.getContext('2d');
+    
+    if (!ctxPie || !ctxBar) return;
+
+    // Categories Chart
+    if (budgetPieChart) budgetPieChart.destroy();
+    
+    const catLabels = Object.keys(stats.categories);
+    const catData = Object.values(stats.categories);
+    
+    if (catLabels.length === 0) {
+        catLabels.push('No Expenses');
+        catData.push(1);
+    }
+
+    budgetPieChart = new Chart(ctxPie, {
+        type: 'doughnut',
+        data: {
+            labels: catLabels,
+            datasets: [{
+                data: catData,
+                backgroundColor: ['#8b5cf6', '#ec4899', '#f59e0b', '#10b981', '#3b82f6', '#6366f1'],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom', labels: { usePointStyle: true, color: '#94a3b8' } }
+            }
+        }
+    });
+
+    // Budget vs Actual
+    if (budgetBarChart) budgetBarChart.destroy();
+    budgetBarChart = new Chart(ctxBar, {
+        type: 'bar',
+        data: {
+            labels: ['Budgeted', 'Spent'],
+            datasets: [{
+                label: 'Amount (₹)',
+                data: [stats.expected_total, stats.actual_total],
+                backgroundColor: ['#e2e8f0', '#8b5cf6'],
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            },
+            plugins: { legend: { display: false } }
+        }
+    });
 }
 
 async function handleBudgetSubmit(e) {

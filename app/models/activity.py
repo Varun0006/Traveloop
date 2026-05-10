@@ -14,6 +14,8 @@ class Activity(db.Model):
     description = db.Column(db.Text, default='')
     start_time = db.Column(db.DateTime, nullable=True)
     end_time = db.Column(db.DateTime, nullable=True)
+    latitude = db.Column(db.Float, nullable=True)
+    longitude = db.Column(db.Float, nullable=True)
     cost = db.Column(db.Float, default=0.0)
     order = db.Column(db.Integer, default=0)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
@@ -29,6 +31,8 @@ class Activity(db.Model):
             'description': self.description,
             'start_time': self.start_time.isoformat() if self.start_time else None,
             'end_time': self.end_time.isoformat() if self.end_time else None,
+            'latitude': self.latitude,
+            'longitude': self.longitude,
             'cost': self.cost,
             'order': self.order,
             'created_at': self.created_at.isoformat() if self.created_at else None,

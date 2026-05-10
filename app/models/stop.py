@@ -13,6 +13,8 @@ class Stop(db.Model):
     location = db.Column(db.String(255), nullable=False)
     arrival_date = db.Column(db.Date, nullable=False)
     departure_date = db.Column(db.Date, nullable=False)
+    latitude = db.Column(db.Float, nullable=True)
+    longitude = db.Column(db.Float, nullable=True)
     order = db.Column(db.Integer, default=0)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
@@ -26,6 +28,8 @@ class Stop(db.Model):
             'location': self.location,
             'arrival_date': self.arrival_date.isoformat() if self.arrival_date else None,
             'departure_date': self.departure_date.isoformat() if self.departure_date else None,
+            'latitude': self.latitude,
+            'longitude': self.longitude,
             'order': self.order,
             'created_at': self.created_at.isoformat() if self.created_at else None,
             'updated_at': self.updated_at.isoformat() if self.updated_at else None,

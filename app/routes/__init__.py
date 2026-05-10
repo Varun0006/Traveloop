@@ -5,6 +5,8 @@ from flask_login import login_required
 
 from app.routes.auth import auth_bp
 from app.routes.dashboard import dashboard_bp
+from app.routes.locations import locations_bp
+from app.routes.itinerary_api import itinerary_bp
 
 # Create blueprints for different route groups
 main_bp = Blueprint('main', __name__)
@@ -39,6 +41,8 @@ def register_blueprints(app):
     app.register_blueprint(dashboard_bp)
     app.register_blueprint(trips_bp)
     app.register_blueprint(trip_api_bp)
+    app.register_blueprint(locations_bp)
+    app.register_blueprint(itinerary_bp)
 
 @trips_bp.route('/<int:trip_id>')
 @login_required

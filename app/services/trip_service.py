@@ -17,7 +17,7 @@ class TripService:
         return [stop.to_dict() for stop in Stop.query.filter_by(trip_id=trip_id).order_by(Stop.order).all()]
 
     @staticmethod
-    def add_stop(trip_id, name, location, arrival_date, departure_date):
+    def add_stop(trip_id, name, location, arrival_date, departure_date, latitude=None, longitude=None):
         # Get max order
         max_order_stop = Stop.query.filter_by(trip_id=trip_id).order_by(Stop.order.desc()).first()
         new_order = max_order_stop.order + 1 if max_order_stop else 0
@@ -28,6 +28,8 @@ class TripService:
             location=location,
             arrival_date=arrival_date,
             departure_date=departure_date,
+            latitude=latitude,
+            longitude=longitude,
             order=new_order
         )
         db.session.add(stop)
@@ -158,6 +160,25 @@ class TripService:
         db.session.commit()
         return True
 
+    @staticmethod
+    def get_budget_summary(trip_id):
+        items = BudgetItem.query.filter_by(trip_id=trip_id).all()
+        categories = {}
+        expected_total = 0
+        actual_total = 0
+        
+        for item in items:
+            expected_total += item.expected_amount
+            actual_total += item.actual_amount
+            categories[item.category] = categories.get(item.category, 0) + item.actual_amount
+            
+        return {
+            'expected_total': expected_total,
+            'actual_total': actual_total,
+            'remaining': expected_total - actual_total,
+            'categories': categories
+        }
+
     # --- Packing Items ---
     @staticmethod
     def get_trip_packing_items(trip_id):
@@ -191,6 +212,19 @@ class TripService:
         db.session.delete(item)
         db.session.commit()
         return True
+
+    @staticmethod
+    def get_packing_stats(trip_id):
+        items = PackingItem.query.filter_by(trip_id=trip_id).all()
+        if not items:
+            return {'total': 0, 'packed': 0, 'percent': 0}
+            
+        packed = sum(1 for item in items if item.is_packed)
+        return {
+            'total': len(items),
+            'packed': packed,
+            'percent': int((packed / len(items)) * 100)
+        }
 
     # --- Notes ---
     @staticmethod
