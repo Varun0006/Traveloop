@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Traveloop{% endblock %}
+
+{% block content %}
+<section class="py-12 sm:py-16 min-h-[calc(100vh-8rem)]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="panel p-7 sm:p-9 mb-8 bg-gradient-to-r from-sky-600 to-orange-400 text-white border-none">
+            <p class="text-xs uppercase tracking-[0.2em] text-sky-100">Dashboard</p>
+            <h1 class="text-3xl sm:text-4xl font-display font-bold mt-2">Welcome, {{ current_user.username }}</h1>
+            <p class="text-sky-100 mt-2 max-w-2xl">Your account is active and ready. Next we will connect this view to live trip data, activities, and budget metrics.</p>
+            <div class="flex flex-wrap gap-3 mt-6">
+                <a href="/trips" class="btn bg-white text-sky-700 hover:bg-sky-50 font-semibold">View Trips</a>
+                <a href="/explore" class="btn border border-white/60 text-white hover:bg-white/10">Explore Places</a>
+            </div>
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-3 mb-8">
+            <div class="card reveal">
+                <div class="flex items-center gap-3 mb-3">
+                    <span class="w-10 h-10 rounded-lg bg-sky-100 dark:bg-sky-900/30 flex items-center justify-center text-sky-600 dark:text-sky-300">
+                        <i class="fas fa-route"></i>
+                    </span>
+                    <h2 class="text-lg font-semibold text-gray-900 dark:text-white">My Trips</h2>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Create, edit, and organize your itineraries with timeline support in upcoming phases.</p>
+            </div>
+
+            <div class="card reveal">
+                <div class="flex items-center gap-3 mb-3">
+                    <span class="w-10 h-10 rounded-lg bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 dark:text-orange-300">
+                        <i class="fas fa-wallet"></i>
+                    </span>
+                    <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Budget</h2>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Track spending and set limits with visual reports once budget tools are enabled.</p>
+            </div>
+
+            <div class="card reveal">
+                <div class="flex items-center gap-3 mb-3">
+                    <span class="w-10 h-10 rounded-lg bg-sky-100 dark:bg-sky-900/30 flex items-center justify-center text-sky-600 dark:text-sky-300">
+                        <i class="fas fa-cloud-sun"></i>
+                    </span>
+                    <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Weather</h2>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Destination weather insights will appear here in a later phase.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="text-xl font-display font-bold text-gray-900 dark:text-white mb-3">What happens next?</h3>
+            <p class="text-gray-600 dark:text-gray-400 mb-4">Phase 2 will connect this dashboard to your live data. Until then, you can set up your account and explore the app flow.</p>
+            <ul class="grid sm:grid-cols-2 gap-3 text-sm text-gray-700 dark:text-gray-300">
+                <li class="rounded-xl border border-gray-200 dark:border-slate-700 p-3">Complete profile and preferences</li>
+                <li class="rounded-xl border border-gray-200 dark:border-slate-700 p-3">Prepare first destination list</li>
+                <li class="rounded-xl border border-gray-200 dark:border-slate-700 p-3">Review map and activity modules</li>
+                <li class="rounded-xl border border-gray-200 dark:border-slate-700 p-3">Track timeline updates in todo</li>
+            </ul>
+        </div>
+    </div>
+</section>
+{% endblock %}

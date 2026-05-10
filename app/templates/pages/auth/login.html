@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Login - Traveloop{% endblock %}
+
+{% block content %}
+<section class="min-h-[calc(100vh-8rem)] py-12 sm:py-16">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="panel overflow-hidden grid lg:grid-cols-2">
+            <div class="p-8 sm:p-10 bg-gradient-to-br from-sky-600 to-orange-400 text-white">
+                <p class="text-xs uppercase tracking-[0.2em] text-sky-100">Welcome back</p>
+                <h1 class="text-3xl sm:text-4xl font-display font-bold mt-3 leading-tight">Your next itinerary is waiting.</h1>
+                <p class="mt-4 text-sky-100">Log in to continue planning routes, activities, and budgets in one place.</p>
+                <ul class="mt-8 space-y-3 text-sm text-white/90">
+                    <li><i class="fas fa-check mr-2"></i>Saved trip timelines</li>
+                    <li><i class="fas fa-check mr-2"></i>One-click weather context</li>
+                    <li><i class="fas fa-check mr-2"></i>Fast mobile experience</li>
+                </ul>
+            </div>
+
+            <div class="p-8 sm:p-10 bg-white/85 dark:bg-slate-900/85">
+                <h2 class="text-2xl font-display font-bold text-gray-900 dark:text-white">Log In</h2>
+                <p class="text-gray-600 dark:text-gray-400 mt-1 mb-6">Use your username or email.</p>
+
+                <form method="POST" action="{{ url_for('auth.login') }}" class="space-y-5" data-loading-form>
+                    <div>
+                        <label for="identifier" class="form-label">Username or Email</label>
+                        <input
+                            id="identifier"
+                            name="identifier"
+                            type="text"
+                            class="form-input"
+                            placeholder="yourname or you@example.com"
+                            required
+                            autofocus
+                        >
+                    </div>
+
+                    <div>
+                        <label for="password" class="form-label">Password</label>
+                        <input
+                            id="password"
+                            name="password"
+                            type="password"
+                            class="form-input"
+                            placeholder="Enter your password"
+                            required
+                        >
+                    </div>
+
+                    <label class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                        <input type="checkbox" name="remember" class="rounded border-gray-300 text-sky-600 focus:ring-sky-500">
+                        Keep me signed in
+                    </label>
+
+                    <button type="submit" class="btn btn-primary w-full" data-loading-button>
+                        <i class="fas fa-right-to-bracket mr-2"></i><span>Log In</span>
+                    </button>
+                </form>
+
+                <p class="text-center text-sm text-gray-600 dark:text-gray-400 mt-6">
+                    New to Traveloop?
+                    <a href="{{ url_for('auth.signup') }}" class="text-sky-600 hover:text-sky-700 dark:text-sky-400 dark:hover:text-sky-300 font-semibold">Create an account</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

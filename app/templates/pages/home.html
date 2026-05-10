@@ -4,57 +4,90 @@
 
 {% block content %}
 <!-- Hero Section -->
-<section class="bg-gradient-to-br from-violet-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-950 dark:to-gray-900 pt-20 pb-32">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+<section class="pt-16 pb-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
         <!-- Badge -->
-        <div class="inline-flex items-center gap-2 bg-violet-100 dark:bg-violet-900/30 px-4 py-2 rounded-full mb-6 border border-violet-200 dark:border-violet-800">
-            <span class="w-2 h-2 bg-violet-600 rounded-full animate-pulse"></span>
-            <span class="text-sm font-medium text-violet-700 dark:text-violet-300">✨ Smart Travel Planning</span>
-        </div>
+            <div>
+                <div class="inline-flex items-center gap-2 bg-sky-100 dark:bg-sky-900/30 px-4 py-2 rounded-full mb-6 border border-sky-200 dark:border-sky-800">
+                    <span class="w-2 h-2 bg-sky-600 rounded-full animate-pulse"></span>
+                    <span class="text-sm font-semibold text-sky-700 dark:text-sky-300">Plan faster, travel smarter</span>
+                </div>
         
-        <!-- Heading -->
-        <h1 class="text-5xl md:text-6xl font-display font-bold text-gray-900 dark:text-white mb-6 leading-tight">
-            Plan Your Perfect
-            <br>
-            <span class="text-gradient">Travel Adventure</span>
-        </h1>
+                <!-- Heading -->
+                <h1 class="text-4xl md:text-6xl font-display font-bold text-gray-900 dark:text-white mb-6 leading-tight">
+                    Build Better Trips
+                    <br>
+                    <span class="text-gradient">Without the Planning Chaos</span>
+                </h1>
         
-        <!-- Subheading -->
-        <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-8">
-            Create beautiful itineraries, discover hidden gems, track your budget, and share your travel memories with the world.
-        </p>
+                <!-- Subheading -->
+                <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-xl mb-8">
+                    From first idea to daily itinerary, Traveloop keeps routes, activities, weather, and budget in one focused workspace.
+                </p>
         
-        <!-- CTA Buttons -->
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            {% if current_user.is_authenticated %}
-                <a href="/trips/create" class="btn btn-primary btn-lg">
-                    <i class="fas fa-plus mr-2"></i>Create Your First Trip
-                </a>
-                <a href="/explore" class="btn btn-outline btn-lg">
-                    <i class="fas fa-compass mr-2"></i>Explore Destinations
-                </a>
-            {% else %}
-                <a href="/signup" class="btn btn-primary btn-lg">
-                    <i class="fas fa-rocket mr-2"></i>Get Started Free
-                </a>
-                <a href="#features" class="btn btn-outline btn-lg">
-                    <i class="fas fa-arrow-down mr-2"></i>Learn More
-                </a>
-            {% endif %}
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4">
+                    {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('main.dashboard') }}" class="btn btn-primary btn-lg">
+                            <i class="fas fa-plus mr-2"></i>Open Dashboard
+                        </a>
+                        <a href="/explore" class="btn btn-outline btn-lg">
+                            <i class="fas fa-compass mr-2"></i>Explore Destinations
+                        </a>
+                    {% else %}
+                        <a href="{{ url_for('auth.signup') }}" class="btn btn-primary btn-lg">
+                            <i class="fas fa-rocket mr-2"></i>Create Free Account
+                        </a>
+                        <a href="{{ url_for('auth.login') }}" class="btn btn-outline btn-lg">
+                            <i class="fas fa-right-to-bracket mr-2"></i>I Already Have an Account
+                        </a>
+                    {% endif %}
+                </div>
+
+                <div class="flex items-center gap-6 mt-7 text-sm text-gray-500 dark:text-gray-400">
+                    <span class="flex items-center gap-2"><i class="fas fa-lock text-sky-500"></i>Secure login</span>
+                    <span class="flex items-center gap-2"><i class="fas fa-mobile-screen text-sky-500"></i>Mobile friendly</span>
+                    <span class="flex items-center gap-2"><i class="fas fa-cloud text-sky-500"></i>Cloud ready</span>
+                </div>
+            </div>
+
+            <div class="panel p-6 md:p-8 reveal">
+                <p class="text-sm font-semibold uppercase tracking-[0.18em] text-sky-600 dark:text-sky-300 mb-3">Today in your planner</p>
+                <div class="space-y-4">
+                    <div class="rounded-xl border border-gray-200 dark:border-slate-700 p-4 bg-white/80 dark:bg-slate-900/80">
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Destination</p>
+                        <p class="font-semibold text-lg">Bangkok to Chiang Mai</p>
+                    </div>
+                    <div class="rounded-xl border border-gray-200 dark:border-slate-700 p-4 bg-white/80 dark:bg-slate-900/80">
+                        <div class="flex justify-between text-sm text-gray-500 dark:text-gray-400 mb-1">
+                            <span>Budget usage</span>
+                            <span>68%</span>
+                        </div>
+                        <div class="h-2 rounded-full bg-gray-200 dark:bg-slate-700 overflow-hidden">
+                            <div class="h-full w-2/3 bg-gradient-to-r from-sky-500 to-orange-400"></div>
+                        </div>
+                    </div>
+                    <div class="rounded-xl border border-gray-200 dark:border-slate-700 p-4 bg-white/80 dark:bg-slate-900/80">
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Next activity</p>
+                        <p class="font-semibold">Wat Chedi Luang walk · 3:30 PM</p>
+                    </div>
+                </div>
+            </div>
         </div>
         
         <!-- Stats -->
-        <div class="grid grid-cols-3 gap-8 mt-16 pt-16 border-t border-gray-200 dark:border-gray-800">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-14 pt-10 border-t border-gray-200 dark:border-gray-800">
             <div>
-                <div class="text-4xl font-bold text-violet-600 mb-2">50K+</div>
+                <div class="text-4xl font-bold text-sky-600 mb-2">50K+</div>
                 <p class="text-gray-600 dark:text-gray-400">Trips Planned</p>
             </div>
             <div>
-                <div class="text-4xl font-bold text-violet-600 mb-2">120K+</div>
+                <div class="text-4xl font-bold text-sky-600 mb-2">120K+</div>
                 <p class="text-gray-600 dark:text-gray-400">Happy Travelers</p>
             </div>
             <div>
-                <div class="text-4xl font-bold text-violet-600 mb-2">180+</div>
+                <div class="text-4xl font-bold text-sky-600 mb-2">180+</div>
                 <p class="text-gray-600 dark:text-gray-400">Countries</p>
             </div>
         </div>
@@ -67,19 +100,19 @@
         <!-- Section Header -->
         <div class="text-center mb-16">
             <h2 class="text-4xl font-display font-bold text-gray-900 dark:text-white mb-4">
-                Everything You Need to Plan Amazing Trips
+                One Workspace For Every Travel Decision
             </h2>
             <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                Powerful features designed to make travel planning effortless and enjoyable
+                A practical toolkit designed to remove guesswork from trip planning.
             </p>
         </div>
         
         <!-- Features Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <!-- Feature 1 -->
-            <div class="card group">
-                <div class="w-12 h-12 bg-violet-100 dark:bg-violet-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:bg-violet-600 group-hover:scale-110 transition-all duration-300">
-                    <i class="fas fa-map text-violet-600 group-hover:text-white text-lg"></i>
+            <div class="card group reveal">
+                <div class="w-12 h-12 bg-sky-100 dark:bg-sky-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:bg-sky-500 group-hover:scale-110 transition-all duration-300">
+                    <i class="fas fa-map text-sky-600 group-hover:text-white text-lg"></i>
                 </div>
                 <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Interactive Maps</h3>
                 <p class="text-gray-600 dark:text-gray-400">
@@ -88,9 +121,9 @@
             </div>
             
             <!-- Feature 2 -->
-            <div class="card group">
-                <div class="w-12 h-12 bg-violet-100 dark:bg-violet-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:bg-violet-600 group-hover:scale-110 transition-all duration-300">
-                    <i class="fas fa-calendar text-violet-600 group-hover:text-white text-lg"></i>
+            <div class="card group reveal">
+                <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:bg-orange-500 group-hover:scale-110 transition-all duration-300">
+                    <i class="fas fa-calendar text-orange-600 group-hover:text-white text-lg"></i>
                 </div>
                 <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Smart Itineraries</h3>
                 <p class="text-gray-600 dark:text-gray-400">
@@ -99,9 +132,9 @@
             </div>
             
             <!-- Feature 3 -->
-            <div class="card group">
-                <div class="w-12 h-12 bg-violet-100 dark:bg-violet-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:bg-violet-600 group-hover:scale-110 transition-all duration-300">
-                    <i class="fas fa-dollar-sign text-violet-600 group-hover:text-white text-lg"></i>
+            <div class="card group reveal">
+                <div class="w-12 h-12 bg-sky-100 dark:bg-sky-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:bg-sky-500 group-hover:scale-110 transition-all duration-300">
+                    <i class="fas fa-dollar-sign text-sky-600 group-hover:text-white text-lg"></i>
                 </div>
                 <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Budget Tracking</h3>
                 <p class="text-gray-600 dark:text-gray-400">
@@ -110,9 +143,9 @@
             </div>
             
             <!-- Feature 4 -->
-            <div class="card group">
-                <div class="w-12 h-12 bg-violet-100 dark:bg-violet-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:bg-violet-600 group-hover:scale-110 transition-all duration-300">
-                    <i class="fas fa-cloud-sun text-violet-600 group-hover:text-white text-lg"></i>
+            <div class="card group reveal">
+                <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:bg-orange-500 group-hover:scale-110 transition-all duration-300">
+                    <i class="fas fa-cloud-sun text-orange-600 group-hover:text-white text-lg"></i>
                 </div>
                 <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Weather Forecasts</h3>
                 <p class="text-gray-600 dark:text-gray-400">
@@ -121,9 +154,9 @@
             </div>
             
             <!-- Feature 5 -->
-            <div class="card group">
-                <div class="w-12 h-12 bg-violet-100 dark:bg-violet-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:bg-violet-600 group-hover:scale-110 transition-all duration-300">
-                    <i class="fas fa-share-alt text-violet-600 group-hover:text-white text-lg"></i>
+            <div class="card group reveal">
+                <div class="w-12 h-12 bg-sky-100 dark:bg-sky-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:bg-sky-500 group-hover:scale-110 transition-all duration-300">
+                    <i class="fas fa-share-alt text-sky-600 group-hover:text-white text-lg"></i>
                 </div>
                 <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Easy Sharing</h3>
                 <p class="text-gray-600 dark:text-gray-400">
@@ -132,9 +165,9 @@
             </div>
             
             <!-- Feature 6 -->
-            <div class="card group">
-                <div class="w-12 h-12 bg-violet-100 dark:bg-violet-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:bg-violet-600 group-hover:scale-110 transition-all duration-300">
-                    <i class="fas fa-list-check text-violet-600 group-hover:text-white text-lg"></i>
+            <div class="card group reveal">
+                <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:bg-orange-500 group-hover:scale-110 transition-all duration-300">
+                    <i class="fas fa-list-check text-orange-600 group-hover:text-white text-lg"></i>
                 </div>
                 <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Packing Checklist</h3>
                 <p class="text-gray-600 dark:text-gray-400">
@@ -146,20 +179,20 @@
 </section>
 
 <!-- CTA Section -->
-<section class="py-20 bg-gradient-to-r from-violet-600 to-purple-600">
+<section class="py-20 bg-gradient-to-r from-sky-600 to-orange-400">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 class="text-4xl font-display font-bold text-white mb-4">
-            Ready to Start Planning?
+            Ready To Build Your Next Trip?
         </h2>
-        <p class="text-xl text-violet-100 mb-8">
+        <p class="text-xl text-sky-100 mb-8">
             Join thousands of travelers already using Traveloop to plan their adventures.
         </p>
         {% if not current_user.is_authenticated %}
-            <a href="/signup" class="btn btn-lg bg-white text-violet-600 hover:bg-gray-100 font-semibold">
+            <a href="{{ url_for('auth.signup') }}" class="btn btn-lg bg-white text-sky-700 hover:bg-gray-100 font-semibold">
                 Create Free Account
             </a>
         {% else %}
-            <a href="/trips/create" class="btn btn-lg bg-white text-violet-600 hover:bg-gray-100 font-semibold">
+            <a href="{{ url_for('main.dashboard') }}" class="btn btn-lg bg-white text-sky-700 hover:bg-gray-100 font-semibold">
                 Start Your First Trip
             </a>
         {% endif %}

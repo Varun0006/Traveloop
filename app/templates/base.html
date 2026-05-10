@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Traveloop - Smart Travel Planning Platform">
     <title>{% block title %}Traveloop - Smart Travel Planning{% endblock %}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- TailwindCSS and Flowbite -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -17,6 +21,7 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body class="bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-50 transition-colors duration-200">
+    <div class="pointer-events-none fixed inset-0 -z-10 opacity-70 dark:opacity-40" style="background-image: linear-gradient(rgba(148, 163, 184, 0.11) 1px, transparent 1px), linear-gradient(90deg, rgba(148, 163, 184, 0.11) 1px, transparent 1px); background-size: 34px 34px;"></div>
     
     <!-- Navigation Header -->
     {% include 'components/navbar.html' %}
@@ -26,24 +31,24 @@
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
-                    <div class="fixed top-4 right-4 z-50 animate-slideIn">
+                    <div class="fixed top-4 right-4 z-50 animate-slideIn max-w-sm w-[calc(100%-2rem)] sm:w-auto">
                         {% if category == 'error' %}
-                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg flex items-center gap-2">
+                            <div class="bg-red-50 border border-red-300 text-red-700 px-4 py-3 rounded-xl shadow-lg flex items-center gap-2">
                                 <i class="fas fa-exclamation-circle"></i>
                                 {{ message }}
                                 <button onclick="this.parentElement.style.display='none'" class="ml-2 text-red-700 hover:text-red-900">×</button>
                             </div>
                         {% elif category == 'success' %}
-                            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg flex items-center gap-2">
+                            <div class="bg-emerald-50 border border-emerald-300 text-emerald-700 px-4 py-3 rounded-xl shadow-lg flex items-center gap-2">
                                 <i class="fas fa-check-circle"></i>
                                 {{ message }}
-                                <button onclick="this.parentElement.style.display='none'" class="ml-2 text-green-700 hover:text-green-900">×</button>
+                                <button onclick="this.parentElement.style.display='none'" class="ml-2 text-emerald-700 hover:text-emerald-900">×</button>
                             </div>
                         {% else %}
-                            <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded-lg flex items-center gap-2">
+                            <div class="bg-sky-50 border border-sky-300 text-sky-700 px-4 py-3 rounded-xl shadow-lg flex items-center gap-2">
                                 <i class="fas fa-info-circle"></i>
                                 {{ message }}
-                                <button onclick="this.parentElement.style.display='none'" class="ml-2 text-blue-700 hover:text-blue-900">×</button>
+                                <button onclick="this.parentElement.style.display='none'" class="ml-2 text-sky-700 hover:text-sky-900">×</button>
                             </div>
                         {% endif %}
                     </div>

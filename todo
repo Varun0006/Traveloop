@@ -49,27 +49,27 @@
 # PHASE 1 — Authentication System (NEXT PRIORITY)
 
 ## Backend: Authentication
-* [ ] Create User model
-* [ ] Create Signup route
-* [ ] Create Login route
-* [ ] Create Logout route
-* [ ] Add password hashing
-* [ ] Add session management
-* [ ] Add authentication validation
-* [ ] Protect routes using login_required
-* [ ] Test authentication flow
+* [x] Create User model
+* [x] Create Signup route
+* [x] Create Login route
+* [x] Create Logout route
+* [x] Add password hashing
+* [x] Add session management
+* [x] Add authentication validation
+* [x] Protect routes using login_required
+* [x] Test authentication flow
 
 ## Frontend: Authentication UI (depends on backend above)
-* [ ] Design Login page
-* [ ] Design Signup page
-* [ ] Connect to backend signup API
-* [ ] Connect to backend login API
-* [ ] Add form validation UI
-* [ ] Add loading states
-* [ ] Add error messages
-* [ ] Add animations
-* [ ] Add responsive behavior
-* [ ] Test authentication flow end-to-end
+* [x] Design Login page
+* [x] Design Signup page
+* [x] Connect to backend signup API
+* [x] Connect to backend login API
+* [x] Add form validation UI
+* [x] Add loading states
+* [x] Add error messages
+* [x] Add animations
+* [x] Add responsive behavior
+* [x] Test authentication flow end-to-end
 
 ---
 

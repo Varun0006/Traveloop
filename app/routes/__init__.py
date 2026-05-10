@@ -1,24 +1,26 @@
-"""
-Routes module for Traveloop
-
-Phase 1 includes basic app structure.
-Authentication routes will be added in Phase 2.
-Trip management routes will be added in Phase 4.
-"""
+"""Core routes and blueprint registration for Traveloop."""
 
 from flask import Blueprint, render_template
-from flask_login import current_user
+from flask_login import login_required
+
+from app.routes.auth import auth_bp
 
 # Create blueprints for different route groups
 main_bp = Blueprint('main', __name__)
-auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
 trips_bp = Blueprint('trips', __name__, url_prefix='/trips')
 
 
 @main_bp.route('/')
 def index():
-    """Home page - Phase 1"""
+    """Public home page."""
     return render_template('pages/home.html')
+
+
+@main_bp.route('/dashboard')
+@login_required
+def dashboard():
+    """Protected dashboard page shown after login."""
+    return render_template('pages/dashboard.html')
 
 
 @main_bp.route('/health')

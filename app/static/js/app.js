@@ -220,6 +220,36 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Remove loading indicator if present
     Loading.hide();
+
+    // Auto-hide flash messages after a short delay.
+    const flashMessages = document.querySelectorAll('.animate-slideIn');
+    flashMessages.forEach((item) => {
+        window.setTimeout(() => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(-6px)';
+            item.style.transition = 'all 0.2s ease';
+            window.setTimeout(() => item.remove(), 220);
+        }, 4200);
+    });
+
+    // Add a simple loading state for forms marked with data-loading-form.
+    const loadingForms = document.querySelectorAll('form[data-loading-form]');
+    loadingForms.forEach((form) => {
+        form.addEventListener('submit', () => {
+            const button = form.querySelector('[data-loading-button]');
+            if (!button) {
+                return;
+            }
+
+            const textEl = button.querySelector('span');
+            button.disabled = true;
+            button.classList.add('opacity-80', 'cursor-not-allowed');
+
+            if (textEl) {
+                textEl.textContent = 'Please wait...';
+            }
+        });
+    });
 });
 
 // Global error handler

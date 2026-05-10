@@ -45,6 +45,7 @@ def create_app(config_name=None):
     
     # Create tables
     with app.app_context():
+        from app.models import User  # noqa: F401
         db.create_all()
     
     return app
