@@ -246,11 +246,39 @@
         renderAllTrips(allTrips.trips);
     }
     
+    // Format numbers as Indian Rupees and dates in Indian locale
+    function formatCurrencyINR(amount) {
+        try {
+            return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 2 }).format(amount || 0);
+        } catch (e) {
+            return `₹${(amount || 0).toFixed(2)}`;
+        }
+    }
+
+    function formatDateIN(dateStr) {
+        if (!dateStr) return '';
+        const d = new Date(dateStr);
+        try {
+            return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+        } catch (e) {
+            // Fallback to ISO
+            return dateStr;
+        }
+    }
+
     function updateStats(stats) {
         document.getElementById('stat-total-trips').textContent = stats.total_trips;
         document.getElementById('stat-active-trips').textContent = stats.active_trips;
-        document.getElementById('stat-total-budget').textContent = `$${stats.total_budget.toFixed(2)}`;
-        document.getElementById('stat-avg-budget').textContent = `$${stats.average_trip_budget.toFixed(2)}`;
+        document.getElementById('stat-total-budget').textContent = formatCurrencyINR(stats.total_budget);
+        document.getElementById('stat-avg-budget').textContent = formatCurrencyINR(stats.average_trip_budget);
+        // Update budget spent and progress if present
+        const spentEl = document.getElementById('budget-spent');
+        if (spentEl) spentEl.textContent = formatCurrencyINR(stats.total_budget || 0);
+        const progressEl = document.getElementById('budget-progress');
+        if (progressEl && stats.total_budget) {
+            // simple progress: assume spent / total budget (placeholder)
+            progressEl.style.width = Math.min(100, 0) + '%';
+        }
     }
     
     function renderActivTrips(trips) {
@@ -284,8 +312,8 @@
     }
     
     function createTripCard(trip) {
-        const startDate = new Date(trip.start_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-        const endDate = new Date(trip.end_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        const startDate = formatDateIN(trip.start_date);
+        const endDate = formatDateIN(trip.end_date);
         
         return `
             <div class="card reveal group cursor-pointer hover:shadow-lg transition-all duration-300">
@@ -304,7 +332,7 @@
                         <span><i class="far fa-calendar mr-1"></i>${startDate} - ${endDate}</span>
                     </div>
                     <div class="flex items-center justify-between pt-3 border-t border-gray-200 dark:border-slate-800">
-                        <span class="font-semibold text-gray-900 dark:text-white">Budget: $${trip.budget.toFixed(2)}</span>
+                        <span class="font-semibold text-gray-900 dark:text-white">Budget: ${formatCurrencyINR(trip.budget)}</span>
                         <span class="px-3 py-1 rounded-full text-xs font-medium ${trip.status === 'planning' ? 'bg-sky-100 dark:bg-sky-900/30 text-sky-700 dark:text-sky-300' : 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300'}">${trip.status}</span>
                     </div>
                 </div>
