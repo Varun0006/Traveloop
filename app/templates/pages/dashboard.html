@@ -6,7 +6,7 @@
 <div class="flex">
     <!-- Sidebar -->
     {% include 'components/sidebar.html' %}
-    
+
     <!-- Main Content -->
     <main class="flex-1 md:ml-64 min-h-screen">
         <!-- Page Header -->
@@ -14,7 +14,8 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div>
-                        <h1 class="text-3xl font-display font-bold text-gray-900 dark:text-white">Welcome back, <span id="user-name">{{ current_user.username }}</span>! 👋</h1>
+                        <h1 class="text-3xl font-display font-bold text-gray-900 dark:text-white">Welcome back, <span
+                                id="user-name">{{ current_user.username }}</span>! 👋</h1>
                         <p class="text-gray-600 dark:text-slate-400 mt-1">Here's your travel overview</p>
                     </div>
                     <button id="create-trip-btn" class="btn btn-primary self-start md:self-auto">
@@ -23,10 +24,10 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Main Content Area -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            
+
             <!-- Dashboard Stats -->
             <div class="grid gap-6 md:grid-cols-4 mb-8">
                 <div class="card reveal">
@@ -35,64 +36,73 @@
                             <p class="text-sm text-gray-600 dark:text-slate-400">Total Trips</p>
                             <p class="text-3xl font-bold text-gray-900 dark:text-white mt-2" id="stat-total-trips">0</p>
                         </div>
-                        <span class="w-12 h-12 rounded-lg bg-sky-100 dark:bg-sky-900/30 flex items-center justify-center text-sky-600 dark:text-sky-300">
+                        <span
+                            class="w-12 h-12 rounded-lg bg-sky-100 dark:bg-sky-900/30 flex items-center justify-center text-sky-600 dark:text-sky-300">
                             <i class="fas fa-map text-xl"></i>
                         </span>
                     </div>
                 </div>
-                
+
                 <div class="card reveal">
                     <div class="flex items-start justify-between">
                         <div>
                             <p class="text-sm text-gray-600 dark:text-slate-400">Active Trips</p>
-                            <p class="text-3xl font-bold text-gray-900 dark:text-white mt-2" id="stat-active-trips">0</p>
+                            <p class="text-3xl font-bold text-gray-900 dark:text-white mt-2" id="stat-active-trips">0
+                            </p>
                         </div>
-                        <span class="w-12 h-12 rounded-lg bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 dark:text-orange-300">
+                        <span
+                            class="w-12 h-12 rounded-lg bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 dark:text-orange-300">
                             <i class="fas fa-fire text-xl"></i>
                         </span>
                     </div>
                 </div>
-                
+
                 <div class="card reveal">
                     <div class="flex items-start justify-between">
                         <div>
                             <p class="text-sm text-gray-600 dark:text-slate-400">Total Budget</p>
-                            <p class="text-3xl font-bold text-gray-900 dark:text-white mt-2" id="stat-total-budget">₹0</p>
+                            <p class="text-3xl font-bold text-gray-900 dark:text-white mt-2" id="stat-total-budget">₹0
+                            </p>
                         </div>
-                        <span class="w-12 h-12 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-300">
+                        <span
+                            class="w-12 h-12 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-300">
                             <i class="fas fa-wallet text-xl"></i>
                         </span>
                     </div>
                 </div>
-                
+
                 <div class="card reveal">
                     <div class="flex items-start justify-between">
                         <div>
                             <p class="text-sm text-gray-600 dark:text-slate-400">Avg Budget</p>
                             <p class="text-3xl font-bold text-gray-900 dark:text-white mt-2" id="stat-avg-budget">₹0</p>
                         </div>
-                        <span class="w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-300">
+                        <span
+                            class="w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-300">
                             <i class="fas fa-chart-pie text-xl"></i>
                         </span>
                     </div>
                 </div>
             </div>
-            
+
             <!-- Active Trips Section -->
             <div class="mb-8">
                 <div class="flex items-center justify-between mb-6">
                     <h2 class="text-2xl font-display font-bold text-gray-900 dark:text-white">Your Active Trips</h2>
-                    <a href="#all-trips" class="text-sky-600 dark:text-sky-400 hover:underline text-sm font-semibold">View all</a>
+                    <a href="#all-trips"
+                        class="text-sky-600 dark:text-sky-400 hover:underline text-sm font-semibold">View all</a>
                 </div>
-                
+
                 <div id="active-trips-container" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                     <!-- Trip cards will be loaded here -->
                     <div class="col-span-full text-center py-12">
-                        <p class="text-gray-600 dark:text-slate-400">No active trips. <a href="#" id="create-trip-link" class="text-sky-600 dark:text-sky-400 hover:underline font-semibold">Create one now!</a></p>
+                        <p class="text-gray-600 dark:text-slate-400">No active trips. <a href="#" id="create-trip-link"
+                                class="text-sky-600 dark:text-sky-400 hover:underline font-semibold">Create one now!</a>
+                        </p>
                     </div>
                 </div>
             </div>
-            
+
             <!-- Quick Stats Section -->
             <div class="grid gap-6 md:grid-cols-2 mb-8">
                 <!-- Budget Overview -->
@@ -106,10 +116,11 @@
                         <div class="w-full bg-gray-200 dark:bg-slate-700 rounded-full h-2">
                             <div id="budget-progress" class="bg-sky-500 h-2 rounded-full" style="width: 0%"></div>
                         </div>
-                        <p class="text-sm text-gray-600 dark:text-slate-400">Budgets will be tracked once trips are created.</p>
+                        <p class="text-sm text-gray-600 dark:text-slate-400">Budgets will be tracked once trips are
+                            created.</p>
                     </div>
                 </div>
-                
+
                 <!-- Recent Destinations -->
                 <div class="card reveal">
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Favorite Destinations</h3>
@@ -118,19 +129,21 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- All Trips Section -->
             <div id="all-trips" class="mb-8">
                 <h2 class="text-2xl font-display font-bold text-gray-900 dark:text-white mb-6">All Your Trips</h2>
-                
+
                 <div id="all-trips-container" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                     <!-- All trips will be loaded here -->
                     <div class="col-span-full text-center py-12">
-                        <p class="text-gray-600 dark:text-slate-400">No trips yet. <a href="#" id="create-first-trip" class="text-sky-600 dark:text-sky-400 hover:underline font-semibold">Create your first trip!</a></p>
+                        <p class="text-gray-600 dark:text-slate-400">No trips yet. <a href="#" id="create-first-trip"
+                                class="text-sky-600 dark:text-sky-400 hover:underline font-semibold">Create your first
+                                trip!</a></p>
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </main>
 </div>
@@ -138,47 +151,61 @@
 <!-- Create Trip Modal -->
 <div id="create-trip-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
     <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
-        <div class="p-6 border-b border-gray-200 dark:border-slate-800 flex items-center justify-between sticky top-0 bg-white dark:bg-slate-900">
+        <div
+            class="p-6 border-b border-gray-200 dark:border-slate-800 flex items-center justify-between sticky top-0 bg-white dark:bg-slate-900">
             <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Create New Trip</h2>
             <button id="close-modal" class="text-gray-500 hover:text-gray-700 dark:hover:text-slate-300">
                 <i class="fas fa-times text-xl"></i>
             </button>
         </div>
-        
+
         <form id="create-trip-form" class="p-6 space-y-4">
             <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">Trip Title</label>
-                <input type="text" id="trip-title" required class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500" placeholder="e.g., Summer vacation to Paris">
+                <input type="text" id="trip-title" required
+                    class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
+                    placeholder="e.g., Summer vacation to Paris">
             </div>
-            
+
             <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">Destination</label>
-                <input type="text" id="trip-destination" required class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500" placeholder="e.g., Paris, France">
+                <input type="text" id="trip-destination" required
+                    class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
+                    placeholder="e.g., Paris, France">
             </div>
-            
+
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">Start Date</label>
-                    <input type="date" id="trip-start-date" required class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+                    <input type="date" id="trip-start-date" required
+                        class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">End Date</label>
-                    <input type="date" id="trip-end-date" required class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+                    <input type="date" id="trip-end-date" required
+                        class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
                 </div>
             </div>
-            
+
             <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">Budget (Optional)</label>
-                <input type="number" id="trip-budget" step="0.01" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500" placeholder="0.00">
+                <label class="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">Budget
+                    (Optional)</label>
+                <input type="number" id="trip-budget" step="0.01"
+                    class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
+                    placeholder="0.00">
             </div>
-            
+
             <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">Description (Optional)</label>
-                <textarea id="trip-description" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500" rows="3" placeholder="Add notes about your trip..."></textarea>
+                <label class="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">Description
+                    (Optional)</label>
+                <textarea id="trip-description"
+                    class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
+                    rows="3" placeholder="Add notes about your trip..."></textarea>
             </div>
-            
+
             <div class="flex gap-3 pt-4">
-                <button type="button" id="cancel-modal" class="flex-1 px-4 py-2 rounded-lg border border-gray-300 dark:border-slate-600 text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors font-medium">Cancel</button>
+                <button type="button" id="cancel-modal"
+                    class="flex-1 px-4 py-2 rounded-lg border border-gray-300 dark:border-slate-600 text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors font-medium">Cancel</button>
                 <button type="submit" class="flex-1 btn btn-primary">Create Trip</button>
             </div>
         </form>
@@ -193,21 +220,22 @@
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%);
     }
-    
+
     .dark .card {
         background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
     }
-    
+
     .reveal {
         animation: revealCard 0.6s ease-out forwards;
         opacity: 0;
     }
-    
+
     @keyframes revealCard {
         from {
             opacity: 0;
             transform: translateY(20px);
         }
+
         to {
             opacity: 1;
             transform: translateY(0);
@@ -224,38 +252,58 @@
         try {
             // Load dashboard data
             await loadDashboardData();
-            
+
             // Setup event listeners
             setupEventListeners();
         } catch (error) {
             console.error('Error loading dashboard:', error);
         }
     });
-    
+
     async function loadDashboardData() {
         // Load stats
         const stats = await apiClient.getDashboardStats();
         updateStats(stats);
-        
+
         // Load active trips
         const activeTips = await apiClient.getActiveTrips();
         renderActivTrips(activeTips.trips);
-        
+
         // Load all trips
         const allTrips = await apiClient.getTrips();
         renderAllTrips(allTrips.trips);
     }
-    
+
+    // Format numbers as Indian Rupees and dates in Indian locale
+    function formatCurrencyINR(amount) {
+        try {
+            return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 2 }).format(amount || 0);
+        } catch (e) {
+            return `₹${(amount || 0).toFixed(2)}`;
+        }
+    }
+
+    function formatDateIN(dateStr) {
+        if (!dateStr) return '';
+        const d = new Date(dateStr);
+        try {
+            return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+        } catch (e) {
+            // Fallback to ISO
+            return dateStr;
+        }
+    }
+
     function updateStats(stats) {
         document.getElementById('stat-total-trips').textContent = stats.total_trips;
         document.getElementById('stat-active-trips').textContent = stats.active_trips;
-        document.getElementById('stat-total-budget').textContent = `₹${stats.total_budget.toLocaleString('en-IN')}`;
-        document.getElementById('stat-avg-budget').textContent = `₹${stats.average_trip_budget.toLocaleString('en-IN')}`;
+        document.getElementById('stat-total-budget').textContent = `$${stats.total_budget.toFixed(2)}`;
+        document.getElementById('stat-avg-budget').textContent = `$${stats.average_trip_budget.toFixed(2)}`;
     }
-    
+
     function renderActivTrips(trips) {
         const container = document.getElementById('active-trips-container');
-        
+
         if (trips.length === 0) {
             container.innerHTML = '<div class="col-span-full text-center py-12"><p class="text-gray-600 dark:text-slate-400">No active trips. <a href="#" id="create-trip-link2" class="text-sky-600 dark:text-sky-400 hover:underline font-semibold">Create one now!</a></p></div>';
             document.getElementById('create-trip-link2')?.addEventListener('click', (e) => {
@@ -264,13 +312,13 @@
             });
             return;
         }
-        
+
         container.innerHTML = trips.map(trip => createTripCard(trip)).join('');
     }
-    
+
     function renderAllTrips(trips) {
         const container = document.getElementById('all-trips-container');
-        
+
         if (trips.length === 0) {
             container.innerHTML = '<div class="col-span-full text-center py-12"><p class="text-gray-600 dark:text-slate-400">No trips yet. <a href="#" id="create-first-trip-link" class="text-sky-600 dark:text-sky-400 hover:underline font-semibold">Create your first trip!</a></p></div>';
             document.getElementById('create-first-trip-link')?.addEventListener('click', (e) => {
@@ -279,14 +327,14 @@
             });
             return;
         }
-        
+
         container.innerHTML = trips.map(trip => createTripCard(trip)).join('');
     }
-    
+
     function createTripCard(trip) {
-        const startDate = DateHelper.format(trip.start_date);
-        const endDate = DateHelper.format(trip.end_date);
-        
+        const startDate = new Date(trip.start_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        const endDate = new Date(trip.end_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
         return `
             <a href="/trips/${trip.id}" class="card reveal block group cursor-pointer hover:shadow-lg transition-all duration-300">
                 <div class="relative h-48 bg-gradient-to-br from-sky-400 to-orange-400 rounded-t-xl overflow-hidden">
@@ -304,25 +352,25 @@
                         <span><i class="far fa-calendar mr-1"></i>${startDate} - ${endDate}</span>
                     </div>
                     <div class="flex items-center justify-between pt-3 border-t border-gray-200 dark:border-slate-800">
-                        <span class="font-semibold text-gray-900 dark:text-white">Budget: ₹${trip.budget.toLocaleString('en-IN')}</span>
+                        <span class="font-semibold text-gray-900 dark:text-white">Budget: $${trip.budget.toFixed(2)}</span>
                         <span class="px-3 py-1 rounded-full text-xs font-medium ${trip.status === 'planning' ? 'bg-sky-100 dark:bg-sky-900/30 text-sky-700 dark:text-sky-300' : 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300'}">${trip.status}</span>
                     </div>
                 </div>
             </a>
         `;
     }
-    
+
     function setupEventListeners() {
         // Create trip button
         document.getElementById('create-trip-btn').addEventListener('click', openModal);
-        
+
         // Modal controls
         document.getElementById('close-modal').addEventListener('click', closeModal);
         document.getElementById('cancel-modal').addEventListener('click', closeModal);
-        
+
         // Form submission
         document.getElementById('create-trip-form').addEventListener('submit', handleCreateTrip);
-        
+
         // Close modal when clicking outside
         document.getElementById('create-trip-modal').addEventListener('click', (e) => {
             if (e.target.id === 'create-trip-modal') {
@@ -330,21 +378,21 @@
             }
         });
     }
-    
+
     function openModal() {
         document.getElementById('create-trip-modal').classList.remove('hidden');
         document.body.style.overflow = 'hidden';
     }
-    
+
     function closeModal() {
         document.getElementById('create-trip-modal').classList.add('hidden');
         document.body.style.overflow = 'auto';
         document.getElementById('create-trip-form').reset();
     }
-    
+
     async function handleCreateTrip(e) {
         e.preventDefault();
-        
+
         const tripData = {
             title: document.getElementById('trip-title').value,
             destination: document.getElementById('trip-destination').value,
@@ -353,7 +401,7 @@
             budget: parseFloat(document.getElementById('trip-budget').value) || 0,
             description: document.getElementById('trip-description').value
         };
-        
+
         try {
             await apiClient.createTrip(tripData);
             closeModal();
