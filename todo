@@ -1,19 +1,13 @@
-# Traveloop —System To-Do Checklist
+# Traveloop — Integrated To-Do Checklist
+
+---
+- **Development Flow**: Backend feature → Frontend for that feature
 
 ---
 
-## 📊 CURRENT STATUS
-- **Backend System**: Phase 1 Completed ✅ → **Phase 2 - Authentication (NEXT)**
-- Last Updated: May 10, 2026
+# PHASE 0 — Foundation Setup (COMPLETED ✅)
 
----
-
-# SYSTEM 1 — Backend + Database System
-
-## Owner: Member 1
-
-# PHASE 1 — Backend Setup
-
+## Backend Foundation
 * [x] Create Flask project
 * [x] Create virtual environment
 * [x] Install Flask dependencies
@@ -23,12 +17,38 @@
 * [x] Configure Flask-Migrate
 * [x] Setup Flask-Login
 * [x] Setup project folders
+* [x] Configure app factory pattern
+* [x] Setup routes blueprints
+* [x] Create .env.example template
+
+## Frontend Foundation
+* [x] Setup TailwindCSS configuration
+* [x] Setup Flowbite integration
+* [x] Setup Heroicons (CDN)
+* [x] Create global styles & CSS components
+* [x] Create violet color palette
+* [x] Setup dark mode (theme.js)
+* [x] Create responsive layout system
+* [x] Create reusable components (navbar, footer)
+* [x] Create base template (base.html)
+* [x] Create home page template
+* [x] Setup form components & utilities
+* [x] Setup animations & transitions
+* [x] Create app utilities (API, storage, validators)
+
+## DevOps & Documentation
+* [x] Create .gitignore
+* [x] Create package.json (Node dependencies)
+* [x] Update README with setup instructions
+* [x] Create development plan (plan.md)
+* [x] Setup project structure documentation
 * [ ] Push initial code to GitHub
 
 ---
 
-# PHASE 2 — Authentication
+# PHASE 1 — Authentication System (NEXT PRIORITY)
 
+## Backend: Authentication
 * [ ] Create User model
 * [ ] Create Signup route
 * [ ] Create Login route
@@ -39,94 +59,28 @@
 * [ ] Protect routes using login_required
 * [ ] Test authentication flow
 
----
-
-# PHASE 3 — Trip System
-
-* [ ] Create Trip model
-* [ ] Create Stop model
-* [ ] Create Activity model
-* [ ] Create Budget model
-* [ ] Create Packing model
-* [ ] Create Notes model
-* [ ] Create SharedLink model
-
----
-
-# PHASE 4 — Backend APIs
-
-* [ ] Create trip API
-* [ ] Create trip edit API
-* [ ] Create trip delete API
-* [ ] Create stop add API
-* [ ] Create stop reorder API
-* [ ] Create activity add API
-* [ ] Create budget calculation API
-* [ ] Create notes API
-* [ ] Create packing checklist API
-
----
-
-# PHASE 5 — Sharing System
-
-* [ ] Generate UUID share tokens
-* [ ] Create public itinerary route
-* [ ] Create read-only mode
-* [ ] Add copy trip functionality
-
----
-
-# PHASE 6 — Optimization
-
-* [ ] Optimize database queries
-* [ ] Add API caching
-* [ ] Add error handling
-* [ ] Add CSRF protection
-* [ ] Add rate limiting
-* [ ] Test all backend routes
-
----
-
-# FINAL TASKS
-
-* [ ] Connect all frontend pages
-* [ ] Fix backend bugs
-* [ ] Deploy backend
-* [ ] Setup production database
-* [ ] Final API testing
-
----
-
-# SYSTEM 2 — Frontend + UI/UX System
-
-## Owner: Member 2
-
-# PHASE 1 — UI Setup
-
-* [ ] Install TailwindCSS
-* [ ] Setup Flowbite
-* [ ] Setup Heroicons
-* [ ] Create global styles
-* [ ] Create violet color palette
-* [ ] Setup dark mode
-* [ ] Create responsive layout
-* [ ] Create reusable components
-
----
-
-# PHASE 2 — Authentication UI
-
+## Frontend: Authentication UI (depends on backend above)
 * [ ] Design Login page
 * [ ] Design Signup page
-* [ ] Add animations
+* [ ] Connect to backend signup API
+* [ ] Connect to backend login API
 * [ ] Add form validation UI
 * [ ] Add loading states
+* [ ] Add error messages
+* [ ] Add animations
 * [ ] Add responsive behavior
+* [ ] Test authentication flow end-to-end
 
 ---
 
-# PHASE 3 — Dashboard UI
+# PHASE 2 — Dashboard System
 
+## Backend: Dashboard APIs
+* [ ] Create User profile route
+* [ ] Create trip listing API
+* [ ] Create dashboard data API
+
+## Frontend: Dashboard UI (depends on backend above)
 * [ ] Create Navbar
 * [ ] Create Sidebar
 * [ ] Create Hero Banner
@@ -134,255 +88,185 @@
 * [ ] Create Destination Cards
 * [ ] Create Budget Summary Cards
 * [ ] Create Search Bar UI
+* [ ] Connect to trip listing API
+* [ ] Add responsive behavior
 
 ---
 
-# PHASE 4 — Trip UI
+# PHASE 3 — Trip System
 
+## Backend: Trip Models & APIs
+* [ ] Create Trip model
+* [ ] Create Stop model
+* [ ] Create Activity model
+* [ ] Create Budget model
+* [ ] Create Packing model
+* [ ] Create Notes model
+* [ ] Create trip creation API
+* [ ] Create trip edit API
+* [ ] Create trip delete API
+* [ ] Create stop add/reorder API
+* [ ] Create activity add API
+* [ ] Create budget calculation API
+
+## Frontend: Trip UI (depends on backend above)
 * [ ] Design Create Trip page
+* [ ] Connect to trip creation API
 * [ ] Design Trip List page
 * [ ] Design Itinerary Builder page
 * [ ] Design Timeline UI
 * [ ] Design Calendar UI
 * [ ] Design Activity Cards
 * [ ] Design Budget Section
+* [ ] Add drag-drop for activity ordering
 
 ---
 
-# PHASE 5 — Advanced UI
+# PHASE 4 — Maps & Locations System
 
-* [ ] Design Packing Checklist UI
-* [ ] Design Notes UI
-* [ ] Design Community Feed UI
-* [ ] Design Profile Page
-* [ ] Design Settings Page
-* [ ] Design Shared Trip Page
-
----
-
-# PHASE 6 — Polish
-
-* [ ] Add hover animations
-* [ ] Add glassmorphism
-* [ ] Add transitions
-* [ ] Improve mobile responsiveness
-* [ ] Improve tablet responsiveness
-* [ ] Optimize spacing
-* [ ] Optimize typography
-
----
-
-# FINAL TASKS
-
-* [ ] Final responsive testing
-* [ ] Fix UI bugs
-* [ ] Improve loading experience
-* [ ] Improve accessibility
-* [ ] Final UI polish
-
----
-
-# SYSTEM 3 — APIs + Maps + Itinerary System
-
-## Owner: Member 3
-
-# PHASE 1 — API Research
-
+## Backend: Location & Map APIs
 * [ ] Setup GeoDB Cities API
 * [ ] Setup OpenTripMap API
-* [ ] Setup OpenWeatherMap API
-* [ ] Setup OpenRouteService API
 * [ ] Setup Unsplash API
-* [ ] Document API limits
+* [ ] Create city autocomplete API
+* [ ] Create city details API
+* [ ] Fetch tourist attractions API
+* [ ] Fetch restaurants API
+* [ ] Fetch activity categories
 
----
-
-# PHASE 2 — City Search
-
-* [ ] Create city autocomplete
-* [ ] Fetch city details
-* [ ] Fetch country data
-* [ ] Fetch coordinates
-* [ ] Fetch city images
-* [ ] Add search filters
-
----
-
-# PHASE 3 — Activity Search
-
-* [ ] Fetch tourist attractions
-* [ ] Fetch restaurants
-* [ ] Fetch adventure activities
-* [ ] Add activity categories
-* [ ] Add activity filters
-* [ ] Add activity images
-
----
-
-# PHASE 4 — Maps
-
+## Frontend: Maps & Search UI (depends on backend above)
 * [ ] Setup Leaflet.js
-* [ ] Show city markers
-* [ ] Show trip routes
-* [ ] Show stop locations
-* [ ] Show activity locations
-* [ ] Add route visualization
-* [ ] Add travel distance calculations
+* [ ] Create city search/autocomplete
+* [ ] Show city markers on map
+* [ ] Show trip routes on map
+* [ ] Show stop locations on map
+* [ ] Create activity search UI
+* [ ] Add activity categories/filters
+* [ ] Connect to location APIs
 
 ---
 
-# PHASE 5 — Itinerary Engine
+# PHASE 5 — Itinerary & Weather System
 
-* [ ] Create timeline generator
-* [ ] Add day-wise itinerary
-* [ ] Add drag-drop ordering
-* [ ] Add activity scheduling
-* [ ] Add stop scheduling
-* [ ] Add travel duration estimation
-
----
-
-# PHASE 6 — Weather & Smart Features
-
-* [ ] Fetch weather forecasts
-* [ ] Add weather widgets
-* [ ] Add travel suggestions
+## Backend: Itinerary Engine
+* [ ] Setup OpenRouteService API
+* [ ] Setup OpenWeatherMap API
+* [ ] Create itinerary generator API
+* [ ] Add day-wise scheduling
+* [ ] Add travel duration calculations
+* [ ] Fetch weather forecasts API
 * [ ] Add best-time recommendations
 
----
-
-# FINAL TASKS
-
-* [ ] Optimize API requests
-* [ ] Add API caching
-* [ ] Handle API failures
-* [ ] Test all integrations
-* [ ] Fix map bugs
+## Frontend: Itinerary & Weather UI (depends on backend above)
+* [ ] Create timeline generator UI
+* [ ] Add day-wise itinerary view
+* [ ] Add drag-drop activity scheduling
+* [ ] Add travel distance/duration display
+* [ ] Add weather widgets
+* [ ] Add travel suggestions display
 
 ---
 
-# SYSTEM 4 — Budget + Charts + Community + Deployment
+# PHASE 6 — Advanced Features
 
-## Owner: Member 4
-
-# PHASE 1 — Budget System
-
+## Backend: Budget, Packing, Notes
 * [ ] Create budget calculator
 * [ ] Create expense tracker
 * [ ] Create daily budget calculation
-* [ ] Create total trip cost calculation
 * [ ] Create budget alerts
-* [ ] Create overbudget warnings
+* [ ] Create packing checklist items API
+* [ ] Create notes API
 
----
-
-# PHASE 2 — Charts & Analytics
-
+## Frontend: Budget, Packing, Notes UI (depends on backend above)
+* [ ] Design Packing Checklist UI
+* [ ] Add checklist item toggle
+* [ ] Add progress tracking
+* [ ] Create Notes UI
 * [ ] Setup Chart.js
-* [ ] Create pie chart
-* [ ] Create bar chart
-* [ ] Create line graph
-* [ ] Create expense breakdown chart
-* [ ] Create budget trend chart
+* [ ] Create budget charts (pie, bar, line)
+* [ ] Create expense breakdown display
 
 ---
 
-# PHASE 3 — Packing Checklist
+# PHASE 7 — Sharing & Community
 
-* [ ] Add checklist item feature
-* [ ] Add packed/unpacked toggle
-* [ ] Add category filters
-* [ ] Add checklist progress
-* [ ] Add reset checklist feature
+## Backend: Sharing System
+* [ ] Create SharedLink model
+* [ ] Generate UUID share tokens
+* [ ] Create public itinerary route
+* [ ] Create read-only mode
+* [ ] Add copy trip functionality
+* [ ] Create community feed API
+* [ ] Create likes/comments system
+
+## Frontend: Sharing & Community UI (depends on backend above)
+* [ ] Design Shared Trip Page
+* [ ] Design Community Feed UI
+* [ ] Create Profile Page
+* [ ] Create Settings Page
+* [ ] Add sharing link generation UI
+* [ ] Add likes/comments UI
 
 ---
 
-# PHASE 4 — Notes & Community
+# PHASE 8 — Admin & Analytics
 
-* [ ] Create trip notes system
-* [ ] Create journal system
-* [ ] Create community feed
-* [ ] Create likes system
-* [ ] Create comments system
-* [ ] Create shared itinerary posts
-
----
-
-# PHASE 5 — Admin Dashboard
-
-* [ ] Create analytics dashboard
+## Backend: Admin Dashboard
+* [ ] Create analytics endpoints
 * [ ] Show user statistics
 * [ ] Show trip statistics
 * [ ] Show top destinations
-* [ ] Show popular activities
+
+## Frontend: Admin Dashboard UI
+* [ ] Create analytics dashboard
+* [ ] Display user statistics
+* [ ] Display trip statistics
+* [ ] Display popular activities
 
 ---
 
-# PHASE 6 — Deployment
+# PHASE 9 — Optimization & Polish
 
+## Backend Optimization
+* [ ] Optimize database queries
+* [ ] Add API caching
+* [ ] Add error handling
+* [ ] Add CSRF protection
+* [ ] Add rate limiting
+* [ ] Test all backend routes
+
+## Frontend Polish
+* [ ] Add hover animations
+* [ ] Add glassmorphism effects
+* [ ] Add transitions
+* [ ] Improve mobile responsiveness
+* [ ] Improve tablet responsiveness
+* [ ] Optimize spacing & typography
+* [ ] Add accessibility features
+* [ ] Final responsive testing
+* [ ] Fix UI bugs
+
+---
+
+# PHASE 10 — Deployment & Final Testing
+
+## Deployment
 * [ ] Setup Render deployment
 * [ ] Setup environment variables
-* [ ] Connect PostgreSQL
-* [ ] Deploy frontend
+* [ ] Connect PostgreSQL production
 * [ ] Deploy backend
+* [ ] Deploy frontend
 * [ ] Test live APIs
 * [ ] Fix deployment issues
 
----
-
-# FINAL TASKS
-
+## Final Testing & Submission
+* [ ] Final API testing
+* [ ] Fix remaining bugs
 * [ ] Create final presentation
 * [ ] Prepare demo flow
 * [ ] Create screenshots
 * [ ] Create feature walkthrough
-* [ ] Final testing
-
----
-
-# FINAL MASTER CHECKLIST
-
-# CORE MVP
-
-* [ ] Authentication
-* [ ] Dashboard
-* [ ] Create Trip
-* [ ] Trip Listing
-* [ ] Itinerary Builder
-* [ ] Activity Search
-* [ ] Budget System
-* [ ] Timeline View
-
----
-
-# IMPORTANT FEATURES
-
-* [ ] Packing Checklist
-* [ ] Notes System
-* [ ] Public Sharing
-* [ ] Maps Integration
-* [ ] Weather Integration
-
----
-
-# BONUS FEATURES
-
-* [ ] Community Feed
-* [ ] Analytics Dashboard
-* [ ] AI Suggestions
-* [ ] Route Optimization
-
----
-
-# FINAL SUBMISSION CHECKLIST
-
-* [ ] Fully responsive
-* [ ] No major bugs
-* [ ] APIs working
-* [ ] Database working
-* [ ] Smooth demo flow
-* [ ] GitHub updated
-* [ ] Deployment live
-* [ ] Presentation ready
-* [ ] Screenshots ready
+* [ ] GitHub documentation complete
 * [ ] Team roles finalized
+
+

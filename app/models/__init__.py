@@ -5,9 +5,9 @@ Phase 1 includes basic User model setup.
 Additional models (Trip, Stop, Activity, etc.) will be added in Phase 3.
 """
 
-from app import db
-from flask_login import UserMixin
-from werkzeug.security import generate_password_hash, check_password_hash
+from app.models.user import User
+
+__all__ = ['User']
 
 
 # Phase 1 Models

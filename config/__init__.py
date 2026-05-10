@@ -1,3 +1,5 @@
+"""Configuration module for Traveloop"""
+
 import os
 from dotenv import load_dotenv
 
@@ -42,3 +44,5 @@ config = {
     'testing': TestingConfig,
     'default': DevelopmentConfig
 }
+
+__all__ = ['Config', 'DevelopmentConfig', 'ProductionConfig', 'TestingConfig', 'config']

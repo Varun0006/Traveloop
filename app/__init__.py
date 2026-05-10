@@ -16,7 +16,9 @@ def create_app(config_name=None):
     if config_name is None:
         config_name = os.getenv('FLASK_ENV', 'development')
     
-    app = Flask(__name__)
+    app = Flask(__name__, 
+                template_folder='templates',
+                static_folder='static')
     
     # Load configuration
     app.config.from_object(config.get(config_name, config['default']))
@@ -29,6 +31,13 @@ def create_app(config_name=None):
     # Configure login manager
     login_manager.login_view = 'auth.login'
     login_manager.login_message = 'Please log in to access this page.'
+    
+    # Register user loader callback
+    @login_manager.user_loader
+    def load_user(user_id):
+        """Load user by ID for Flask-Login"""
+        from app.models.user import User
+        return User.query.get(int(user_id))
     
     # Register blueprints
     from app.routes import register_blueprints

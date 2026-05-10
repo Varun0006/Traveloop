@@ -1,0 +1,19 @@
+{
+  "name": "traveloop-frontend",
+  "version": "0.1.0",
+  "description": "Traveloop - Smart Travel Planning Platform Frontend",
+  "scripts": {
+    "tailwind": "tailwindcss -i ./app/static/css/globals.css -o ./app/static/css/output.css",
+    "tailwind:watch": "tailwindcss -i ./app/static/css/globals.css -o ./app/static/css/output.css --watch",
+    "dev": "npm run tailwind:watch",
+    "build": "npm run tailwind"
+  },
+  "dependencies": {
+    "flowbite": "^2.0.0"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.3.0",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.27"
+  }
+}
